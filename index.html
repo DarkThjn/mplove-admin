@@ -4,12 +4,33 @@
 <head>
 
 <meta charset="UTF-8">
-
 <title>MPLove Admin</title>
 
 <link rel="stylesheet" href="style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+#wheel{
+margin-top:20px;
+display:block;
+}
+
+#wheelContainer{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+#randomResult{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+}
+
+</style>
 
 </head>
 
@@ -44,12 +65,18 @@ Total Gifts
 <div class="controls">
 
 <button id="randomBtn">
-🎲 Random Gift
+🎡 Spin Wheel
 </button>
 
 </div>
 
+<div id="wheelContainer">
+
+<canvas id="wheel" width="320" height="320"></canvas>
+
 <div id="randomResult"></div>
+
+</div>
 
 <div id="wishlist"></div>
 
