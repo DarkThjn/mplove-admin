@@ -120,7 +120,7 @@ Math.floor(Math.random()*wishlistData.length)
 ]
 
 document.getElementById("randomResult")
-innerText =
+.innerText =
 "🎁 "+random.gift_name
 
 }
