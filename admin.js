@@ -2,13 +2,58 @@ const SUPABASE_URL = "https://dkmlutpxnikwtzrntmts.supabase.co"
 const SUPABASE_KEY = "sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
 
 const db = window.supabase.createClient(
-"https://dkmlutpxnikwtzrntmts.supabase.co",
-"sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
+SUPABASE_URL,
+SUPABASE_KEY
 )
 
 const wishlistEl = document.getElementById("wishlist")
 
 let wishlistData = []
+
+/* ---------- WHEEL ---------- */
+
+const canvas = document.getElementById("wheel")
+const ctx = canvas.getContext("2d")
+
+let angle = 0
+let spinning = false
+
+function drawWheel(){
+
+if(!wishlistData.length) return
+
+const arc = (2*Math.PI)/wishlistData.length
+
+ctx.clearRect(0,0,320,320)
+
+wishlistData.forEach((item,i)=>{
+
+const start = angle + i*arc
+
+ctx.beginPath()
+ctx.moveTo(160,160)
+ctx.arc(160,160,150,start,start+arc)
+
+ctx.fillStyle = i%2 ? "#ff8fa3" : "#ffd6e0"
+ctx.fill()
+
+ctx.save()
+
+ctx.translate(160,160)
+ctx.rotate(start + arc/2)
+
+ctx.fillStyle = "#000"
+ctx.font = "13px sans-serif"
+
+ctx.fillText(item.gift_name,60,5)
+
+ctx.restore()
+
+})
+
+}
+
+/* ---------- LOAD WISHLIST ---------- */
 
 async function loadWishlist(){
 
@@ -17,13 +62,16 @@ const {data,error} = await db
 .select("*")
 .order("created_at",{ascending:false})
 
-wishlistData = data
+wishlistData = data || []
 
 renderStats()
-
 renderWishlist()
 
+drawWheel()
+
 }
+
+/* ---------- STATS ---------- */
 
 function renderStats(){
 
@@ -40,6 +88,8 @@ document.getElementById("low").innerText =
 wishlistData.filter(i=>i.priority==="Low").length
 
 }
+
+/* ---------- WISHLIST UI ---------- */
 
 function renderWishlist(){
 
@@ -83,6 +133,8 @@ wishlistEl.appendChild(card)
 
 }
 
+/* ---------- DELETE ---------- */
+
 async function deleteGift(id){
 
 await db
@@ -93,6 +145,8 @@ await db
 loadWishlist()
 
 }
+
+/* ---------- PURCHASED ---------- */
 
 async function togglePurchased(id,current){
 
@@ -107,22 +161,58 @@ loadWishlist()
 
 }
 
-document.getElementById("randomBtn")
-.onclick = randomGift
+/* ---------- SPIN WHEEL ---------- */
 
-function randomGift(){
+function spinWheel(){
 
-if(wishlistData.length===0) return
+if(spinning || wishlistData.length===0) return
 
-const random =
-wishlistData[
-Math.floor(Math.random()*wishlistData.length)
-]
+spinning = true
 
-document.getElementById("randomResult")
-.innerText =
-"🎁 "+random.gift_name
+let spinTime = Math.random()*2000 + 2500
+let start = performance.now()
+
+function animate(time){
+
+let progress = time - start
+
+angle += 0.15
+
+drawWheel()
+
+if(progress < spinTime){
+
+requestAnimationFrame(animate)
+
+}else{
+
+spinning = false
+
+const index =
+Math.floor(
+(wishlistData.length -
+((angle%(2*Math.PI))/(2*Math.PI))*wishlistData.length)
+% wishlistData.length
+)
+
+const gift = wishlistData[index]
+
+document.getElementById("randomResult").innerText =
+"🎁 "+gift.gift_name
 
 }
+
+}
+
+requestAnimationFrame(animate)
+
+}
+
+/* ---------- BUTTON ---------- */
+
+document.getElementById("randomBtn")
+.onclick = spinWheel
+
+/* ---------- INIT ---------- */
 
 loadWishlist()
