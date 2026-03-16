@@ -1,9 +1,9 @@
-const SUPABASE_URL = "YOUR_SUPABASE_URL"
-const SUPABASE_KEY = "YOUR_SUPABASE_PUBLIC_KEY"
+const SUPABASE_URL = "https://dkmlutpxnikwtzrntmts.supabase.co"
+const SUPABASE_KEY = "sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
 
 const supabase = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+"https://dkmlutpxnikwtzrntmts.supabase.co",
+"sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
 )
 
 const wishlistEl = document.getElementById("wishlist")
