@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://dkmlutpxnikwtzrntmts.supabase.co"
 const SUPABASE_KEY = "sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
 
-const supabase = window.supabase.createClient(
+const db = window.supabase.createClient(
 "https://dkmlutpxnikwtzrntmts.supabase.co",
 "sb_publishable_bUoFVF3pk_IKgu0R0oweaw_NSdAe6xV"
 )
@@ -12,7 +12,7 @@ let wishlistData = []
 
 async function loadWishlist(){
 
-const {data,error} = await supabase
+const {data,error} = await db
 .from("wishlist")
 .select("*")
 .order("created_at",{ascending:false})
@@ -85,7 +85,7 @@ wishlistEl.appendChild(card)
 
 async function deleteGift(id){
 
-await supabase
+await db
 .from("wishlist")
 .delete()
 .eq("id",id)
@@ -96,7 +96,7 @@ loadWishlist()
 
 async function togglePurchased(id,current){
 
-await supabase
+await db
 .from("wishlist")
 .update({
 purchased: !current
