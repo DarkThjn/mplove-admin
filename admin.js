@@ -94,12 +94,12 @@ loadWishlist()
 
 }
 
-async function togglePurchased(id){
+async function togglePurchased(id,current){
 
 await supabase
 .from("wishlist")
 .update({
-purchased:true
+purchased: !current
 })
 .eq("id",id)
 
