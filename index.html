@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="UTF-8">
+
 <title>MPLove Admin</title>
 
 <link rel="stylesheet" href="style.css">
@@ -13,13 +15,46 @@
 
 <body>
 
-<h1>🎁 MPLove Admin</h1>
+<h1>🎁 MPLove Admin Dashboard</h1>
 
-<button id="randomBtn">🎲 Random Gift</button>
+<div class="stats">
+
+<div class="stat">
+Total Gifts
+<span id="total"></span>
+</div>
+
+<div class="stat">
+🔥 High
+<span id="high"></span>
+</div>
+
+<div class="stat">
+⭐ Medium
+<span id="medium"></span>
+</div>
+
+<div class="stat">
+🌿 Low
+<span id="low"></span>
+</div>
+
+</div>
+
+<div class="controls">
+
+<button id="randomBtn">
+🎲 Random Gift
+</button>
+
+</div>
+
+<div id="randomResult"></div>
 
 <div id="wishlist"></div>
 
 <script src="admin.js"></script>
 
 </body>
+
 </html>
