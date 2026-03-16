@@ -71,8 +71,8 @@ Open Product
 Delete
 </button>
 
-<button onclick="togglePurchased('${item.id}')">
-Purchased
+<button onclick="togglePurchased('${item.id}',${item.purchased})">
+${item.purchased ? "Unmark" : "Purchased"}
 </button>
 
 `
